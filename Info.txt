@@ -1,0 +1,7 @@
+Steps on creating this Social Media project with Lama Dev on YouTube with link https://www.youtube.com/watch?v=ldGl6L4Vktk:
+- Created api and client folders
+- In api:
+-- Used "npm init -y" to create a new package.json 
+-- Used "npm install express mongoose dotenv helmet morgan nodemon" to install necessary packages
+-- Mongoose --> User: qiniselad, password: bhWFMKDOVULZRLMd
+-- Used this to create cluster and added details to the special url and attached to .env
