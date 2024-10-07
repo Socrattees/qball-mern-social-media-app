@@ -5,3 +5,7 @@ Steps on creating this Social Media project with Lama Dev on YouTube with link h
 -- Used "npm install express mongoose dotenv helmet morgan nodemon" to install necessary packages
 -- Mongoose --> User: qiniselad, password: bhWFMKDOVULZRLMd
 -- Used this to create cluster and added details to the special url and attached to .env
+-- Created routes
+- In client:
+-- Used "npx create-react-app . -y" inside client path to create the react project
+-- Used "npm install @mui/icons-material @mui/material @emotion/styled @emotion/react" to install Material UI for icons
