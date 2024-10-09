@@ -59,6 +59,34 @@ export default function Leftbar() {
               <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
               <span className="leftbarFriendName">Jane Doe</span>
             </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
+            <li className="leftbarFriend">
+              <img src="/assets/person/2.jpeg" alt="" className="leftbarFriendImg" />
+              <span className="leftbarFriendName">Jane Doe</span>
+            </li>
           </ul>
         </div>
       Leftbar
