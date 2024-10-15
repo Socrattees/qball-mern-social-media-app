@@ -1,0 +1,48 @@
+.profileRightbar {
+  flex: 3;
+  padding: 20px 20px 0 0;
+}
+
+.profileRightbarTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.profileRightbarInfo {
+  margin-bottom: 30px;
+}
+
+.profileRightbarInfoItem {
+  margin-bottom: 10px;
+}
+
+.profileRightbarInfoKey {
+  font-weight: 500;
+  color: #555;
+}
+
+.profileRightbarInfoValue {
+  font-weight: 300;
+}
+
+.profileRightbarFollowings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.profileRightbarFollowing {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.profileRightbarFollowingImg {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+}
