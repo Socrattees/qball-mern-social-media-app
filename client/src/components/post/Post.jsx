@@ -40,8 +40,8 @@ export default function Post({ post }) {
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img className="reactIcon" src="assets/like.png" alt="" onClick={ likeHandler } />
-            <img className="reactIcon" src="assets/heart.png" alt="" />
+            <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "like.png" } alt="" onClick={ likeHandler } />
+            <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "heart.png" } alt="" />
             <span className="postLikeCounter">{ like } people liked it</span>
           </div>
           <div className="postBottomRight">

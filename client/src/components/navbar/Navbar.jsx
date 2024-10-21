@@ -4,14 +4,17 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <div className="navbarContainer">
       <div className="navbarLeft">
-        <span className="logo">
-          Q-Ball
-        </span>
+        <Link to="/">
+          <span className="logo">
+            Q-Ball
+          </span>
+        </Link>
       </div>
       <div className="navbarCenter">
         <div className="searchbar">

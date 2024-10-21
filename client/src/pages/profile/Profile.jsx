@@ -14,8 +14,8 @@ export default function Profile() {
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">     
-              <img className="profileCoverImg" src="assets/post/1.jpeg" alt="" />
-              <img className="profileUserImg" src="assets/person/1.jpeg" alt="" />
+              <img className="profileCoverImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + "post/1.jpeg" } alt="" />
+              <img className="profileUserImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + "person/1.jpeg" } alt="" />
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">User</h4>
