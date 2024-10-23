@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./post.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from "axios";
-import TimeAgo from 'timeago-react';
+// import TimeAgo from 'timeago-react';
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -17,6 +19,13 @@ export default function Post({ post }) {
       setLike(like - 1);
       setIsLiked(false);
     }
+  }
+
+  //function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
+  const postDateOutput = () => {
+    const dateString = post.createdAt;
+    const date = parseISO(dateString);
+    return formatDistanceToNow(date, 'yyyy-MM-dd HH:mm:ss') + " ago";
   }
 
   useEffect(() => {
@@ -36,9 +45,11 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img className="postProfileImg" src={ user.profilePicture ? `${process.env.REACT_APP_PUBLIC_FOLDER}${user.profilePicture}` :  `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" />
+            <Link to={ `/profile/${post.userId}`}>
+              <img className="postProfileImg" src={ user.profilePicture ? `${process.env.REACT_APP_PUBLIC_FOLDER}${user.profilePicture}` :  `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" />
+            </Link>
             <span className="postUsername">{ user.username }</span>
-            <TimeAgo className="postDate" datetime={ post.createdAt }/>
+            <span className="postDate">{ postDateOutput() }</span>
           </div>
           <div className="postTopRight">
             <MoreVertIcon />
