@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import Navbar from "../../components/navbar/Navbar.jsx";
 import Leftbar from "../../components/leftbar/Leftbar.jsx";
 import Feed from "../../components/feed/Feed.jsx";
 import ProfileRightbar from "../../components/profileRightbar/ProfileRightbar.jsx";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
+  const [user, setUser] = useState({});
+  const userId = useParams().id;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?userId=${userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [userId]);
   return (
     <>
       <Navbar />
@@ -14,17 +26,17 @@ export default function Profile() {
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">     
-              <img className="profileCoverImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + "post/1.jpeg" } alt="" />
-              <img className="profileUserImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + "person/1.jpeg" } alt="" />
+              <img className="profileCoverImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + (user.coverPicture || "person/noCover.png") } alt="" />
+              <img className="profileUserImg" src={ process.env.REACT_APP_PUBLIC_FOLDER + (user.profilePicture || "person/noAvatar.png") } alt="" />
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">User</h4>
-              <span className="profileInfoDesc">User Desc</span>
+              <h4 className="profileInfoName">{ user.username }</h4>
+              <span className="profileInfoDesc">{ user.desc }</span>
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed />
-            <ProfileRightbar />
+            <Feed userId={ userId }/>
+            <ProfileRightbar user={ user }/>
           </div>
         </div>
       </div>

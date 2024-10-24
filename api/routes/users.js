@@ -5,9 +5,11 @@ import User from "../models/User.js";
 const router = express.Router();
 
 //GET USER
-router.get("/:id", async(req, res) => {
+router.get("/", async(req, res) => {
+  const userId = req.query.userId;
+  // const username = req.query.username;
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(userId);
     const { password, updatedAt, ...other } = user._doc; //seperates unnecessary properties
     res.status(200).json(other);
   } catch (err) {
