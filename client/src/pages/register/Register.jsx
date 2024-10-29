@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import "./register.css";
+import { Link, useNavigate } from "react-router-dom";
+import { registerCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Register() {
+  const username = useRef();
+  const email = useRef();
+  const password = useRef();
+  const rePassword = useRef();
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (password.current.value !== rePassword.current.value) {
+      rePassword.current.setCustomValidity("Passwords don't match!");
+    } else {
+      rePassword.current.setCustomValidity("");
+      const user = {
+        username: username.current.value,
+        email: email.current.value,
+        password: password.current.value
+      }
+      registerCall(user, dispatch);
+      navigate("/");
+    }
+  }
+
   return (
     <div className="register">
       <div className="registerWrapper">
@@ -12,14 +38,16 @@ export default function Register() {
           </span>
         </div>
         <div className="registerRight">
-          <div className="registerBox">
-            <input placeholder="Username" type="text" className="registerInput" />
-            <input placeholder="Email" type="email" className="registerInput" />
-            <input placeholder="Password" type="password" className="registerInput" />
-            <input placeholder="Re-enter Password" type="password" className="registerInput" />
-            <button className="registerButton">Sign Up</button>
-            <button className="registerRegisterButton">Log into account</button>
-          </div>
+          <form className="registerBox" onSubmit={ handleClick }>
+            <input placeholder="Username" type="text" className="registerInput" ref={ username } required />
+            <input placeholder="Email" type="email" className="registerInput" ref={ email } required />
+            <input placeholder="Password" type="password" className="registerInput" ref={ password } required />
+            <input placeholder="Re-enter Password" type="password" className="registerInput" ref={ rePassword} required />
+            <button className="registerButton" type="submit">Sign Up</button>
+            <Link to="/login">
+              <button className="loginButton" type="button">Log into account</button>
+            </Link>
+          </form>
         </div>
       </div>
     </div>

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./feed.css";
 import Share from "../share/Share";
 import Post from "../post/Post";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext.js";
 
 export default function Feed({ userId }) {
   const [posts, setPosts] = useState([]);
   const location = useLocation();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -16,7 +18,7 @@ export default function Feed({ userId }) {
         if (location.pathname.includes("profile")) {
           res = await axios.get(`/posts/profile/${userId}`);
         } else {
-          res = await axios.get(`/posts/timeline/66fd1f42d4aaa89358deac8d`);
+          res = await axios.get(`/posts/timeline/${user._id}`);
         }
         setPosts(res.data);
       } catch (err) {
@@ -24,7 +26,7 @@ export default function Feed({ userId }) {
       }
     }
     fetchPosts();
-  }, [location.pathname, userId]);
+  }, [location.pathname, userId, user._id]);
 
   return (
     <div className="feed">
