@@ -18,3 +18,11 @@ export const registerCall = async (user, dispatch) => {
     console.log("Register unsuccessful");
   }
 }
+
+export const likeCall = async (postId, currentUserId) => {
+  try {
+    await axios.put(`/posts/${postId}/like`, { userId: currentUserId });
+  } catch (err) {
+    console.log("An error occured with the like button");
+  }
+}

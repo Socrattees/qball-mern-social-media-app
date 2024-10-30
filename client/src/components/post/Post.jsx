@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./post.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from "axios";
 // import TimeAgo from 'timeago-react';
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
+import { likeCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext.js";
 
 export default function Post({ post }) {
-  const [like, setLike] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(false);
+  const { user:currentUser } = useContext(AuthContext);
   const [user, setUser] = useState({});
+  const [like, setLike] = useState(post.likes.length);
+  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id));
 
   const likeHandler = () => {
     if (!isLiked) {
@@ -19,6 +22,7 @@ export default function Post({ post }) {
       setLike(like - 1);
       setIsLiked(false);
     }
+    likeCall(post._id, currentUser._id);
   }
 
   //function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
