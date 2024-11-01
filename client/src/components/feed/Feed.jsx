@@ -16,9 +16,9 @@ export default function Feed({ userId }) {
       try {
         var res = "";
         if (location.pathname.includes("profile")) {
-          res = await axios.get(`/posts/profile/${userId}`);
+          res = await axios.get(`/api/posts/profile/${userId}`);
         } else {
-          res = await axios.get(`/posts/timeline/${user._id}`);
+          res = await axios.get(`/api/posts/timeline/${user._id}`);
         }
         setPosts(res.data);
       } catch (err) {
