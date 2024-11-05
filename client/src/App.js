@@ -4,10 +4,10 @@ import Register from "./pages/register/Register.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import { createBrowserRouter, RouterProvider, Navigate, Route, createRoutesFromElements } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext.js";
+import { UserContext } from "./context/UserContext.js";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   const router = createBrowserRouter(
     createRoutesFromElements(

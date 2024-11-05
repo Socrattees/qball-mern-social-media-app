@@ -5,10 +5,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext.js";
+import { UserContext } from "../../context/UserContext.js";
 
 export default function Navbar() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div className="navbarContainer">
@@ -28,7 +28,7 @@ export default function Navbar() {
       <div className="navbarRight">
         <div className="navbarLinks">
           <span className="navbarLink">Homepage</span>
-          <span className="navbarLink">Timeline</span>
+          <span className="navbarLink">Sign Out</span>
         </div>
         <div className="navbarIcons">
           <div className="navbarIconItem">

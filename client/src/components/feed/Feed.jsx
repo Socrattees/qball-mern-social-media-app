@@ -4,12 +4,12 @@ import Share from "../share/Share";
 import Post from "../post/Post";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext.js";
+import { UserContext } from "../../context/UserContext.js";
 
 export default function Feed({ userId }) {
   const [posts, setPosts] = useState([]);
   const location = useLocation();
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const fetchPosts = async () => {

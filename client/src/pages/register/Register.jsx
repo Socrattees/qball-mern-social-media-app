@@ -2,7 +2,7 @@ import React, { useContext, useRef } from "react";
 import "./register.css";
 import { Link, useNavigate } from "react-router-dom";
 import { registerCall } from "../../apiCalls";
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
 
 export default function Register() {
   const username = useRef();
@@ -10,7 +10,7 @@ export default function Register() {
   const password = useRef();
   const rePassword = useRef();
   const navigate = useNavigate();
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(UserContext);
 
   const handleClick = (e) => {
     e.preventDefault();

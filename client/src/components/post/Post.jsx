@@ -6,10 +6,10 @@ import axios from "axios";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
 import { likeCall } from "../../apiCalls";
-import { AuthContext } from "../../context/AuthContext.js";
+import { UserContext } from "../../context/UserContext.js";
 
 export default function Post({ post }) {
-  const { user:currentUser } = useContext(AuthContext);
+  const { user:currentUser } = useContext(UserContext);
   const [user, setUser] = useState({});
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id));

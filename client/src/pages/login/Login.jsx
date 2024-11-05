@@ -1,14 +1,14 @@
 import React, { useContext, useRef } from "react";
 import "./login.css";
 import { loginCall } from "../../apiCalls.js";
-import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
 import { CircularProgress } from '@mui/material';
 import { Link } from "react-router-dom";
 
 export default function Login() {
   const email = useRef(); //unlike useState, prevents re-renders to save performance
   const password = useRef(); //also it's designed to directly interacting with DOM elements and not so much on states
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const { user, isFetching, error, dispatch } = useContext(UserContext);
 
   const handleClick = (e) => {
     e.preventDefault();

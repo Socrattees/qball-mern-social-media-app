@@ -4,11 +4,11 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import LabelIcon from '@mui/icons-material/Label';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-import { AuthContext } from "../../context/AuthContext.js";
+import { UserContext } from "../../context/UserContext.js";
 import { newPostCall } from "../../apiCalls.js";
 
 export default function Share() {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
   const desc = useRef();
   const [file, setFile] = useState(null);
 

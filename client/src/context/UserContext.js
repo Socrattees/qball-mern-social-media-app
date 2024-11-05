@@ -1,5 +1,5 @@
 import { createContext, useMemo, useReducer } from "react";
-import AuthReducer from "./AuthReducer";
+import UserReducer from "./UserReducer";
 
 const INITIAL_STATE = {
   user: null,
@@ -7,10 +7,10 @@ const INITIAL_STATE = {
   error: false
 }
 
-export const AuthContext = createContext(INITIAL_STATE);
+export const UserContext = createContext(INITIAL_STATE);
 
-export const AuthContextProvider = ({children}) => {
-  const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+export const UserContextProvider = ({children}) => {
+  const [state, dispatch] = useReducer(UserReducer, INITIAL_STATE);
 
   const contextValue = useMemo(() => ({
     user: state.user,
@@ -20,8 +20,8 @@ export const AuthContextProvider = ({children}) => {
   }), [state.user, state.isFetching, state.error]);
 
   return (
-    <AuthContext.Provider value={ contextValue }>
+    <UserContext.Provider value={ contextValue }>
       { children /* Child for this instance would be App */ }  
-    </AuthContext.Provider>
+    </UserContext.Provider>
   )
 }
