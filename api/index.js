@@ -22,27 +22,19 @@ const __dirname = path.dirname(__filename); //extracts directory from the file p
 app.use("/images", express.static(path.join(__dirname, "public/images"))); 
 
 //middleware
+app.use(express.json()); //ensures json requests can be parsed into requests
+app.use(helmet());
+app.use(morgan("common"));
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.body.name);
   }
 });
 const upload = multer({ storage });
-
-app.use(express.json()); //ensures json requests can be parsed into requests
-app.use(helmet());
-app.use(morgan("common"));
-
-app.use("/api/users", userRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/posts", postRouter);
-
-app.get("/", (req, res) => {
-  res.send("Welcome to home page");
-});
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
@@ -50,6 +42,14 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.use("/api/users", userRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/posts", postRouter);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to home page");
 });
 
 app.listen(8800, () => {

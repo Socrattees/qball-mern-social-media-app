@@ -1,8 +1,8 @@
-import { createContext, useMemo, useReducer } from "react";
+import { createContext, useEffect, useMemo, useReducer } from "react";
 import UserReducer from "./UserReducer";
 
 const INITIAL_STATE = {
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   isFetching: false,
   error: false
 }
@@ -18,6 +18,10 @@ export const UserContextProvider = ({children}) => {
     error: state.error,
     dispatch,
   }), [state.user, state.isFetching, state.error]);
+
+  useEffect(()=>{
+    localStorage.setItem("user", JSON.stringify(state.user))
+  },[state.user]);
 
   return (
     <UserContext.Provider value={ contextValue }>

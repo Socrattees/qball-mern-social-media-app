@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .profileRightbar {
   flex: 3;
   padding: 20px 20px 0 0;
@@ -29,7 +34,6 @@
 .profileRightbarFollowings {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .profileRightbarFollowing {
@@ -45,4 +49,22 @@
   height: 100px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.rightbarFollowButton{
+  margin-bottom: 10px;
+  border: none;
+  background-color: #252525;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.rightbarFollowButton:focus{
+  outline: none;
 }

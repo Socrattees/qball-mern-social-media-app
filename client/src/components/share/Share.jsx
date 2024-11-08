@@ -4,8 +4,9 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import LabelIcon from '@mui/icons-material/Label';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { UserContext } from "../../context/UserContext.js";
-import { newPostCall } from "../../apiCalls.js";
+import { newPostCall, uploadCall } from "../../apiCalls.js";
 
 export default function Share() {
   const { user } = useContext(UserContext);
@@ -18,7 +19,16 @@ export default function Share() {
       userId: user._id,
       desc: desc.current.value || ""
     }
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+      uploadCall(data);
+    }
     newPostCall(newPost);
+    window.location.reload();
   }
 
   return (
@@ -29,6 +39,12 @@ export default function Share() {
           <input type="text" className="shareInput" placeholder="What's on your mind?" ref={ desc }/>
         </div>
         <hr className="shareHr"/>
+        {file && (
+          <div className="shareImgContainer">
+            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+            <CancelIcon className="shareCancelImg" onClick={() => setFile(null)} />
+          </div>
+        )}
         <form className="shareBottom" onSubmit={ submitHandler }>
           <div className="shareOptions">
             {/* The option below is designed to allow file upload by clicking on element rather than using default button */}

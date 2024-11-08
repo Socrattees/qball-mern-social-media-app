@@ -20,7 +20,9 @@ export default function Feed({ userId }) {
         } else {
           res = await axios.get(`/api/posts/timeline/${user._id}`);
         }
-        setPosts(res.data);
+        setPosts(res.data.sort((p1, p2) => {
+          return new Date(p2.createdAt) - new Date(p1.createdAt);
+        }));
       } catch (err) {
         console.error("Error fetching posts:", err.response ? err.response.data : err.message);
       }
