@@ -8,9 +8,10 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function Profile() {
-  const [user, setUser] = useState({});
-  const userId = useParams().id;
+  const [user, setUser] = useState({}); // user of the profile page
+  const userId = useParams().id; // grabs user id from the params
 
+  // manages changes to the user id and fetches the respective data accordingly
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/api/users?userId=${userId}`);

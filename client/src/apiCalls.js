@@ -1,15 +1,22 @@
 import axios from "axios";
+import {
+  LoginStart,
+  LoginSuccess,
+  LoginFail
+} from "./context/UserActions";
 
+// call that deals with logging a user in
 export const loginCall = async (user, dispatch) => {
-  dispatch({ type: "LOGIN_START" });
+  dispatch(LoginStart());
   try {
     const res = await axios.post("/api/auth/login", user);
-    dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    dispatch(LoginSuccess(res.data));
   } catch (err) {
-    dispatch({ type: "LOGIN_FAIL", payload: err });
+    dispatch(LoginFail(err));
   }
 };
 
+// call that deals with creating a new user account
 export const registerCall = async (user, dispatch) => {
   try {
     await axios.post("/api/auth/register", user);
@@ -19,6 +26,7 @@ export const registerCall = async (user, dispatch) => {
   }
 }
 
+// call that deals with liking/unliking a user
 export const likeCall = async (postId, currentUserId) => {
   try {
     await axios.put(`/api/posts/${postId}/like`, { userId: currentUserId });
@@ -27,6 +35,7 @@ export const likeCall = async (postId, currentUserId) => {
   }
 }
 
+// call that deals with the uploading of a file
 export const uploadCall = async (file) => {
   try {
     await axios.post(`/api/upload`, file);
@@ -35,6 +44,7 @@ export const uploadCall = async (file) => {
   }
 }
 
+// call that creates a new post
 export const newPostCall = async (post) => {
   try {
     await axios.post("/api/posts", post);
@@ -43,6 +53,7 @@ export const newPostCall = async (post) => {
   }
 }
 
+// call that grabs the list of a user's followings
 export const getFollowingsCall = async (user) => {
   try {
     const res = await axios.get("/api/users/followings/" + user._id);
@@ -52,9 +63,10 @@ export const getFollowingsCall = async (user) => {
   }
 }
 
+// call that deals with following a user
 export const followCall = async (user, currentUser) => {
   try {
-    await axios.put(`/users/${user._id}/follow`, {
+    await axios.put(`/api/users/${user._id}/follow`, {
       userId: currentUser._id,
     });
   } catch (err) {
@@ -62,9 +74,10 @@ export const followCall = async (user, currentUser) => {
   }
 }
 
+// call that deals with unfollowing a user
 export const unFollowCall = async (user, currentUser) => {
   try {
-    await axios.put(`/users/${user._id}/unfollow`, {
+    await axios.put(`/api//users/${user._id}/unfollow`, {
       userId: currentUser._id,
     });
   } catch (err) {

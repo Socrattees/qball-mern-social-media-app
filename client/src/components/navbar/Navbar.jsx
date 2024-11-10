@@ -6,9 +6,17 @@ import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext.js";
+import { LogOut } from "../../context/UserActions.js";
 
 export default function Navbar() {
-  const { user } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
+
+  // logs the user out of their account
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+    dispatch(LogOut());
+    window.location.reload();
+  }
 
   return (
     <div className="navbarContainer">
@@ -27,8 +35,10 @@ export default function Navbar() {
       </div>
       <div className="navbarRight">
         <div className="navbarLinks">
-          <span className="navbarLink">Homepage</span>
-          <span className="navbarLink">Sign Out</span>
+          <Link to={ "/" }>
+            <span className="navbarLink">Homepage</span>
+          </Link>
+          <span className="navbarLink" onClick={ handleLogOut }>Log Out</span>
         </div>
         <div className="navbarIcons">
           <div className="navbarIconItem">

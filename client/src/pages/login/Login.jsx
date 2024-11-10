@@ -6,10 +6,11 @@ import { CircularProgress } from '@mui/material';
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const email = useRef(); //unlike useState, prevents re-renders to save performance
-  const password = useRef(); //also it's designed to directly interacting with DOM elements and not so much on states
-  const { user, isFetching, error, dispatch } = useContext(UserContext);
+  const email = useRef(); // unlike useState, prevents re-renders to save performance
+  const password = useRef(); // also it's designed to directly interacting with DOM elements and not so much on states
+  const { user, isFetching, dispatch } = useContext(UserContext);
 
+  // handles the login form submission
   const handleClick = (e) => {
     e.preventDefault();
     loginCall({ email:email.current.value, password:password.current.value }, dispatch); //current is the actual DOM element and value is the element's value

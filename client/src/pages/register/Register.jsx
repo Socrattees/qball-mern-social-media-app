@@ -12,6 +12,7 @@ export default function Register() {
   const navigate = useNavigate();
   const { dispatch } = useContext(UserContext);
 
+  // handles the register form submission
   const handleClick = (e) => {
     e.preventDefault();
     if (password.current.value !== rePassword.current.value) {

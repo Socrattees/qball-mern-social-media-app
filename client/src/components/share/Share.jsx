@@ -13,6 +13,7 @@ export default function Share() {
   const desc = useRef();
   const [file, setFile] = useState(null);
 
+  // handles the share form submission that includes the file if there is any
   const submitHandler = (e) => {
     e.preventDefault();
     const newPost = {
@@ -47,7 +48,7 @@ export default function Share() {
         )}
         <form className="shareBottom" onSubmit={ submitHandler }>
           <div className="shareOptions">
-            {/* The option below is designed to allow file upload by clicking on element rather than using default button */}
+            { /* The option below is designed to allow file upload by clicking on element rather than using default button */}
             <label htmlFor="file" className="shareOption">
               <PermMediaIcon htmlColor="purple" className="shareIcon" />
               <span className="shareOptionText">Photo/Video</span>

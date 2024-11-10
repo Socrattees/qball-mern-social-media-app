@@ -11,6 +11,7 @@ export default function Feed({ userId }) {
   const location = useLocation();
   const { user } = useContext(UserContext);
 
+  // fetches the posts to populate the feed based on the page
   useEffect(() => {
     const fetchPosts = async () => {
       try {

@@ -10,10 +10,11 @@ import { UserContext } from "../../context/UserContext.js";
 
 export default function Post({ post }) {
   const { user:currentUser } = useContext(UserContext);
-  const [user, setUser] = useState({});
-  const [like, setLike] = useState(post.likes.length);
-  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id));
+  const [user, setUser] = useState({}); // user that post belongs to
+  const [like, setLike] = useState(post.likes.length); // post's likes
+  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id)); // boolean that checks if post has been liked by the current user
 
+  // manages the post's like state by the current user, adding like if user didn't like the post yet
   const likeHandler = () => {
     if (!isLiked) {
       setLike(like + 1);
@@ -25,13 +26,14 @@ export default function Post({ post }) {
     likeCall(post._id, currentUser._id);
   }
 
-  //function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
+  // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
   const postDateOutput = () => {
     const dateString = post.createdAt;
     const date = parseISO(dateString);
     return formatDistanceToNow(date, 'yyyy-MM-dd HH:mm:ss') + " ago";
   }
 
+  // fetches the user of the post and sets it in the local variable
   useEffect(() => {
     const fetchUser = async () => {
       try {
