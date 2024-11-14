@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./leftbar.css";
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -11,8 +11,27 @@ import EventIcon from '@mui/icons-material/Event';
 import SchoolIcon from '@mui/icons-material/School';
 import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
+import { getFollowingsCall } from "../../apiCalls";
+import { UserContext } from "../../context/UserContext";
 
 export default function Leftbar() {
+  const { user:currentUser } = useContext(UserContext);
+  const [followings, setFollowings] = useState([]);
+
+  useEffect(() => {
+    const fetchFollowings = async () => {
+      if (currentUser) {
+        try {
+          const res = await getFollowingsCall(currentUser);
+          setFollowings(res.data);
+        } catch (err) {
+          console.log("Failed to get followings", err);
+        }
+      }
+    }
+    fetchFollowings();
+  }, [currentUser]);
+
   return (
     <div className="leftbar">
       <div className="leftbarWrapper">
@@ -57,8 +76,8 @@ export default function Leftbar() {
         <button className="leftbarButton">Show More</button>
         <hr className="leftbarHr" />
         <ul className="leftbarFriendList">
-          { Users.map((user) => {
-            return <CloseFriend key={ user.id } user={ user } />
+          { followings.map((user) => {
+            return <CloseFriend key={ user._id } user={ user } />
           })}
         </ul>
       </div>

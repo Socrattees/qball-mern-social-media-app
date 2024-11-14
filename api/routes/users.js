@@ -31,7 +31,7 @@ router.put("/:id", async (req, res) => {
     }
     try {
       const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body //sets everything to what's inside the req.body
+        $set: req.body // sets everything to what's inside the req.body
       });
       res.status(200).json("Account has been updated");
     } catch (err) {
@@ -113,6 +113,28 @@ router.get("/followings/:userId", async (req, res) => {
     friends.map((friend) => {
       const { _id, username, profilePicture } = friend;
       friendList.push({ _id, username, profilePicture });
+    });
+    res.status(200).json(friendList);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET LIST OF FOLLOWINGS THAT ARE ONLINE
+router.get("/followings/:userId/online", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const friends = await Promise.all(
+      user.following.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
+    let friendList = [];
+    friends.map((friend) => {
+      if (friend.isOnline) {
+        const { _id, username, profilePicture } = friend;
+        friendList.push({ _id, username, profilePicture });
+      }
     });
     res.status(200).json(friendList);
   } catch (err) {

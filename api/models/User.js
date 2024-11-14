@@ -58,6 +58,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["Single", "Married", "Other"],
     default: "Single"
+  },
+  isOnline: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true});
 

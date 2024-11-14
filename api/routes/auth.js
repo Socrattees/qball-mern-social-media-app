@@ -29,7 +29,6 @@ router.post("/register", async (req, res) => {
 //LOGIN
 router.post("/login", async (req, res) => {
   try {
-    console.log("request sent");
     const user = await User.findOne({email: req.body.email});
     if (!user) {
       return res.status(404).send("User not found");
@@ -39,9 +38,23 @@ router.post("/login", async (req, res) => {
     if (!validPassword) {
       return res.status(400).send("Invalid password");
     }
+    user.isOnline = true;
+    await user.save();
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
+  }
+});
+
+//LOGOUT
+router.put("/logout", async (req, res) => {
+  try {
+    const user = await User.findById(req.body.id);
+    user.isOnline = false;
+    await user.save();
+    res.status(200).json("User is now offline");
+  } catch (err) {
+    res.status(404).json("Unable to alter online status to 'offline'");
   }
 });
 

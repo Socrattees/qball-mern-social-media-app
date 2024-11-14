@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./profileRightbar.css";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext.js";
 import { followCall, getFollowingsCall, unFollowCall } from "../../apiCalls";
 import { Link } from "react-router-dom";
 

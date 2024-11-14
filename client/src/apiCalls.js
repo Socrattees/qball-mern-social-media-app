@@ -5,7 +5,7 @@ import {
   LoginFail
 } from "./context/UserActions";
 
-// call that deals with logging a user in
+// call that deals with logging a user in and sets them online
 export const loginCall = async (user, dispatch) => {
   dispatch(LoginStart());
   try {
@@ -15,6 +15,15 @@ export const loginCall = async (user, dispatch) => {
     dispatch(LoginFail(err));
   }
 };
+
+// call that logs the user off and sets them offline
+export const logOutCall = async (user) => {
+  try {
+    await axios.put("/api/auth/logout", { id: user._id });
+  } catch (err) {
+    console.log("Failed to log the user out");
+  }
+}
 
 // call that deals with creating a new user account
 export const registerCall = async (user, dispatch) => {
@@ -60,6 +69,16 @@ export const getFollowingsCall = async (user) => {
     return res;
   } catch (err) {
     console.log("An error occured while retrieving list of followings");
+  }
+}
+
+// call that grabs the list os a user's followings that are online
+export const getFollowingsOnlineCall = async (user) => {
+  try {
+    const res = await axios.get("/api/users/followings/" + user._id + "/online");
+    return res;
+  } catch (err) {
+    console.log("An error occured while retrieving list of online followings");
   }
 }
 

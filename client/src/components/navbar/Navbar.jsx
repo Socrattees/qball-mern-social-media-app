@@ -7,14 +7,16 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext.js";
 import { LogOut } from "../../context/UserActions.js";
+import { logOutCall } from "../../apiCalls.js";
 
 export default function Navbar() {
   const { user, dispatch } = useContext(UserContext);
 
   // logs the user out of their account
   const handleLogOut = () => {
-    localStorage.removeItem("user");
-    dispatch(LogOut());
+    logOutCall(user, dispatch); // changes the user to offline in server
+    localStorage.removeItem("user"); // removes user details from local storage
+    dispatch(LogOut()); // removes user details from context state
     window.location.reload();
   }
 
