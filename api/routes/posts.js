@@ -87,7 +87,19 @@ router.get("/timeline/:userId", async (req, res) => {
   }
 });
 
-//GET ALL USER POSTS
+//GET ALL POSTS
+router.get("/public-feed/all", async (req, res) => {
+  console.log("Getting posts...");
+  try {
+    const allPosts = await Post.find();
+    console.log(allPosts);
+    res.status(200).json(allPosts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET ALL USER'S POSTS
 router.get("/profile/:userId", async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId);

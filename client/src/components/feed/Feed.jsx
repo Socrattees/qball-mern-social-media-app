@@ -18,6 +18,8 @@ export default function Feed({ userId }) {
         var res = "";
         if (location.pathname.includes("profile")) {
           res = await axios.get(`/api/posts/profile/${userId}`);
+        } else if (location.pathname.includes("public")) {
+          res = await axios.get(`/api/posts/public-feed/all`);
         } else {
           res = await axios.get(`/api/posts/timeline/${user._id}`);
         }
