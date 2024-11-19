@@ -1,0 +1,26 @@
+.searchResultFriend {
+  width: 100%; /* Match the width of the search input */
+  background-color: white;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.searchResultProfileImgContainer {
+  margin-right: 10px;
+  position: relative;
+}
+
+.searchResultProfileImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10px;
+}
+
+.searchResultUsername {
+  font-weight: 500;
+}

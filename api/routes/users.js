@@ -142,4 +142,18 @@ router.get("/followings/:userId/online", async (req, res) => {
   }
 });
 
+//SEARCH FOR USER IN SEARCH BAR
+router.get("/search", async (req, res) => {
+  const query = req.query.q;
+  if (!query) {
+    return res.status(200).json([]); // Return an empty array if the query is empty
+  }
+  try {
+    const users = await User.find({ username: { $regex: query, $options: "i" } });
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 export default router;

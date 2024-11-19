@@ -103,3 +103,13 @@ export const unFollowCall = async (user, currentUser) => {
     console.log("An error occured while unfollowing the user");
   }
 }
+
+// call that handles the searchbar in the navbar
+export const searchCall = async (query) => {
+  try {
+    const res = await axios.get(`/api/users/search?q=${ query }`);
+    return res;
+  } catch (err) {
+    console.error("Failed to fetch search results", err);
+  }
+}
