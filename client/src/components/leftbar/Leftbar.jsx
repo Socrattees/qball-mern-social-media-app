@@ -9,10 +9,10 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import WorkIcon from '@mui/icons-material/Work';
 import EventIcon from '@mui/icons-material/Event';
 import SchoolIcon from '@mui/icons-material/School';
-import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
 import { getFollowingsCall } from "../../apiCalls";
 import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
 export default function Leftbar() {
   const { user:currentUser } = useContext(UserContext);
@@ -38,7 +38,9 @@ export default function Leftbar() {
         <ul className="leftbarList">
           <li className="leftbarListItem">
             <RssFeedIcon className="leftbarIcon"/>
-            <span className="leftbarListItemText">Feed</span>
+            <Link to={ "/public-feed" }>
+              <span className="leftbarListItemText">Public Feed</span>
+            </Link>
           </li>
           <li className="leftbarListItem">
             <ChatIcon className="leftbarIcon"/>

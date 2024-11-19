@@ -26,6 +26,18 @@ export default function Post({ post }) {
     likeCall(post._id, currentUser._id);
   }
 
+  // manages how the text is displayed for the number of likes on the post
+  const postLikeText = () => {
+    if (like) {
+      if (like > 1) {
+        return like + " people liked it";
+      }
+      return like + " person liked it";
+    } else {
+      return "";
+    }
+  }
+
   // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
   const postDateOutput = () => {
     const dateString = post.createdAt;
@@ -71,7 +83,7 @@ export default function Post({ post }) {
           <div className="postBottomLeft">
             <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "like.png" } alt="" onClick={ likeHandler } />
             <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "heart.png" } alt="" />
-            <span className="postLikeCounter">{ like } people liked it</span>
+            <span className="postLikeCounter">{ postLikeText() }</span>
           </div>
           <div className="postBottomRight">
             <span className="postCommentText">{ post.comment } comments</span>
