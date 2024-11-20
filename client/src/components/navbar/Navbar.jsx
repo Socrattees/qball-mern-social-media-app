@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./navbar.css";
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
@@ -34,6 +34,13 @@ export default function Navbar() {
     dispatch(LogOut()); // removes user details from context state
     window.location.reload();
   }
+
+  // clears results should the input be empty
+  useEffect(() => {
+    if (!query) {
+      setResults([]);
+    }
+  }, [query]);
 
   // allows dynamic results to show depending on the changing query in the input
   // useEffect(() => {
