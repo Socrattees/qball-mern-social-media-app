@@ -56,13 +56,13 @@ export default function ProfileRightbar({ user }) {
 
   return (
     <div className="profileRightbar">
-      {user.username !== currentUser.username && (
+      <div className="profileRightbarInfo">
+        {user.username !== currentUser.username && (
           <button className="rightbarFollowButton" onClick={handleClick}>
             {currentlyFollowing ? "Unfollow" : "Follow"}
             {currentlyFollowing ? <RemoveIcon /> : <AddIcon />}
           </button>
         )}
-      <div className="profileRightbarInfo">
         <h4 className="profileRightbarTitle">User Information</h4>
         <div className="profileRightbarInfoItem">
           <span className="profileRightbarInfoKey">City: </span>

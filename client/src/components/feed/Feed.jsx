@@ -36,7 +36,7 @@ export default function Feed({ userId }) {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share />
+        { (!userId || userId === user._id) && <Share /> /* ensures component doesn't show when visiting other people's pages */}
         { posts.map(post => {
           return <Post key={ post._id } post={ post }/>
         })}
