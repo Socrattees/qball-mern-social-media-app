@@ -5,6 +5,7 @@
   box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.69);
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.69);
   -moz-box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.69);
+  margin-top: 20px;
 }
 
 .shareWrapper {

@@ -6,6 +6,7 @@ import PublicFeed from "./pages/publicFeed/PublicFeed.jsx";
 import { createBrowserRouter, RouterProvider, Navigate, Route, createRoutesFromElements } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext.js";
+import Messenger from "./pages/messenger/Messenger.jsx";
 
 function App() {
   const { user } = useContext(UserContext);
@@ -17,6 +18,7 @@ function App() {
         <Route path="/public-feed" element={ <PublicFeed /> } />
         <Route path="/login" element={ user ? <Navigate to="/" /> : <Login /> } />
         <Route path="/register" element={ user ? <Navigate to="/" /> : <Register /> } />
+        <Route path="/messenger" element={ user ? <Messenger /> : <Navigate to="/login" /> } />
         <Route path="/profile/:id" element={ user ? <Profile /> : <Navigate to="/login" /> } />
       </>
     )
