@@ -6,6 +6,8 @@ import helmet from "helmet";
 import userRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
 import postRouter from "./routes/posts.js";
+import conversationRouter from "./routes/conversations.js";
+import messageRouter from "./routes/messages.js";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url"; //function converts file URL to URL path
@@ -47,6 +49,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postRouter);
+app.use("/api/conversations", conversationRouter);
+app.use("/api/messages", messageRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to home page");
