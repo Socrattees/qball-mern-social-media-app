@@ -6,7 +6,7 @@ const router = express.Router();
 
 //GET USER
 router.get("/", async(req, res) => {
-  const userId = req.query.userId;
+  const userId = req.query.userId; // grabs userId from query like ?userId={userId}
   // const username = req.query.username;
   try {
     const user = await User.findById(userId);

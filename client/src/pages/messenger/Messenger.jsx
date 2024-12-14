@@ -3,8 +3,22 @@ import Navbar from "../../components/navbar/Navbar";
 import Conversation from "../../components/conversation/Conversation.jsx";
 import Message from "../../components/message/Message.jsx";
 import ChatOnline from "../../components/chatOnline/ChatOnline.jsx";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/UserContext.js";
+import { getConversationCall } from "../../apiCalls.js";
 
 export default function Messenger() {
+  const { user } = useContext(UserContext);
+  const [conversations, setConversations] = useState([]);
+
+  useEffect(() => {
+    const getConversation = async () => {
+      const res = await getConversationCall(user._id);
+      setConversations(res.data);
+    }
+    getConversation();
+  }, [user]);
+
   return (
     <>
       <Navbar/>
@@ -12,9 +26,9 @@ export default function Messenger() {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input type="text" placeholder="Search for friends" className="chatMenuInput" />
-            <Conversation />
-            <Conversation />
-            <Conversation />
+            { conversations.map((conversation) => {
+              return <Conversation key={ conversation._id } conversation={ conversation }/>
+            })}
           </div>
         </div>
         <div className="chatBox">

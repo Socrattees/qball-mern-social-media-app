@@ -25,7 +25,7 @@ export default function Navbar() {
     }
   };
 
-  console.log(results);
+  //console.log(results);
 
   // logs the user out of their account
   const handleLogOut = () => {

@@ -107,9 +107,29 @@ export const unFollowCall = async (user, currentUser) => {
 // call that handles the searchbar in the navbar
 export const searchCall = async (query) => {
   try {
-    const res = await axios.get(`/api/users/search?q=${ query }`);
+    const res = await axios.get(`/api/users/search?q=${query}`);
     return res;
   } catch (err) {
     console.error("Failed to fetch search results", err);
+  }
+}
+
+// call that retrieves a conversation
+export const getConversationCall = async (userId) => {
+  try {
+    const res = await axios.get(`/api/conversations/${userId}`);
+    return res;
+  } catch (err) {
+    console.error("Failed to get the conversation", err);
+  }
+}
+
+// call that gets a friend's details from a conversation
+export const getFriendConversationCall = async (friendId) => {
+  try {
+    const res = await axios.get(`/api/users?userId=${friendId}`);
+    return res;
+  } catch (err) {
+    console.error("Failed to get friend's details from a conversation", err);
   }
 }
