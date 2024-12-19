@@ -133,3 +133,32 @@ export const getFriendConversationCall = async (friendId) => {
     console.error("Failed to get friend's details from a conversation", err);
   }
 }
+
+// call that gets the messages of a conversation
+export const getMessagesCall = async (conversationId) => {
+  try {
+    const res = axios.get(`/api/messages/${conversationId}`);
+    return res;
+  } catch (err) {
+    console.error("Failed to get the messages from the conversation", err);
+  }
+}
+
+// call that gets a friend's details from a message (similar to getFriendConversationCall)
+export const getFriendMessageCall = async (friendId) => {
+  try {
+    const res = await axios.get(`/api/users?userId=${friendId}`);
+    return res;
+  } catch (err) {
+    console.error("Failed to get friend's details from a conversation", err);
+  }
+}
+
+// call that creates a new message to be stored in the current conversation
+export const newMessageCall = async (message) => {
+  try {
+    await axios.post(`/api/messages`, message);
+  } catch (err) {
+    console.error("Failed to create a new message for the current conversation", err);
+  }
+}

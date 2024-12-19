@@ -1,17 +1,39 @@
+import { useEffect, useState } from "react";
 import "./message.css";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { getFriendMessageCall } from "../../apiCalls";
 
-export default function Message({isOwn}) {
+export default function Message({message, isOwn}) {
+    const [friend, setFriend] = useState("");
+
+    // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
+    const messageDateOutput = () => {
+      const dateString = message.createdAt;
+      const date = parseISO(dateString);
+      return formatDistanceToNow(date, 'yyyy-MM-dd HH:mm:ss') + " ago";
+    }
+
+    useEffect(() => {
+      if (message && !isOwn) {
+        const getFriend = async () => {
+          const res = await getFriendMessageCall(message.sender);
+          setFriend(res.data);
+        }
+        getFriend();
+      }
+    }, [message, isOwn]);
+
   return (
-    <div className={ isOwn? "message own" : "message" }>
+    <div className={ isOwn ? "message own" : "message" }>
       <div className="messageTop">
         { !isOwn &&
-          <img src={ process.env.REACT_APP_PUBLIC_FOLDER + "post/5.jpeg" } alt="" className="messageImg" />
+          <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") } alt="" className="messageImg" />
         }
-        <p className="messageText">I love the feel of wood curls flying off the lathe as I begin to shape the log in front of me. The sound of scraping changes based on the wetness of the wood, the speed at which the lathe is turning, and the type of cut I am making. The smell and feel of wet wood being turned are unique. The water is sprayed out as I cut through the different layers of wood. A log can turn into anything one's imagination can think of with the right set of hands-on tools. I have those hands and imagination. I use all of my senses and intuition to create a beautiful object. That is why I enjoy turning wood.
-
+        <p className="messageText">
+          { message.text }
         </p>
       </div>
-      <div className="messageBottom">1 hour ago</div>
+      <div className="messageBottom">{ messageDateOutput() }</div>
     </div>
   )
 }

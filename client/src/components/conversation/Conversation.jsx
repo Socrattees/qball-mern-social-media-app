@@ -21,8 +21,6 @@ export default function Conversation({ conversation }) {
     }
   }, [user, conversation]);
 
-  console.log(friend);
-
   return (
     <div className="conversation">
       <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") } alt="" className="conversationImg" />
