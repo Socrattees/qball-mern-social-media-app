@@ -64,7 +64,7 @@ Should you desire to change any of the 3 ports, here are things to take into con
     -- Second option is to create or navigate to .env add the entry "PORT=[new port value like 3001]".
     -- If either of these options are used, make sure to navagiate to the socket folder, go to index.js and change the value of the origin property within the cors object that is stored in the io variable to incorporate the new change (e.g."http://localhost:3001").
   - If you want to change the port of the server:
-    -- Navigate to api folder, go to index.js and change the app.listen() port arg from the value that is there (may be 8800) to the port that you desire.
+    - Navigate to api folder, go to index.js and change the app.listen() port arg from the value that is there (may be 8800) to the port that you desire.
     -- Once change has been made, navigate to the client folder, go to package.json and change the value of the "proxy" property to include the new port value. This is so that the client is able to proxy towards the new port.
   - If you want to change the port of the socket:
     -- Navigate to socket folder, go to index.js and change the arg of the new Server() declaration that is assigned to the variable io from the existing port (may be 8900) to the new port.
