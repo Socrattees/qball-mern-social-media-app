@@ -35,6 +35,16 @@ export const registerCall = async (user, dispatch) => {
   }
 }
 
+// call that retrieves a user's details
+export const getUserCall = async (userId) => {
+  try {
+    const res = await axios.get(`/api/users?userId=${userId}`);
+    return res;
+  } catch (err) {
+    console.log("An error occured while retrieving the user");
+  }
+}
+
 // call that deals with liking/unliking a user
 export const likeCall = async (postId, currentUserId) => {
   try {
@@ -121,6 +131,16 @@ export const getConversationCall = async (userId) => {
     return res;
   } catch (err) {
     console.error("Failed to get the conversation", err);
+  }
+}
+
+// call that retrieves a conversation based on two users
+export const getConversationTwoUsersCall = async (firstUserId, secondUserId) => {
+  try {
+    const res = await axios.get(`/api/conversations/find/${firstUserId}/${secondUserId}`);
+    return res;
+  } catch (err) {
+    console.error("Failed to get the conversation based on two users", err);
   }
 }
 

@@ -8,9 +8,9 @@ export default function Message({message, isOwn}) {
 
     // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
     const messageDateOutput = () => {
-      const dateString = message.createdAt;
+      const dateString = message.createdAt.toString();
       const date = parseISO(dateString);
-      return formatDistanceToNow(date, 'yyyy-MM-dd HH:mm:ss') + " ago";
+      return formatDistanceToNow(date) + " ago";
     }
 
     useEffect(() => {

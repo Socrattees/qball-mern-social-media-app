@@ -6,7 +6,7 @@ import ChatOnline from "../../components/chatOnline/ChatOnline.jsx";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../context/UserContext.js";
 import { getConversationCall, getMessagesCall, newMessageCall } from "../../apiCalls.js";
-
+import { io } from "socket.io-client";
 
 export default function Messenger() {
   const { user } = useContext(UserContext);
@@ -14,6 +14,9 @@ export default function Messenger() {
   const [currentChat, setCurrentChat] = useState(null); //conversation that's selected
   const [messages, setMessages] = useState([]); //messages from the selected conversation
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
   const scrollRef = useRef();
 
   const handleSubmit = async (e) => {
@@ -23,7 +26,12 @@ export default function Messenger() {
       sender: user._id,
       text: newMessage
     };
-    newMessageCall(message);
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId: currentChat.members.find((member) => member !== user._id),
+      text: newMessage
+    });
+    await newMessageCall(message);
     const res = await getMessagesCall(currentChat._id);
     setMessages(res.data);
     setNewMessage("");
@@ -50,8 +58,37 @@ export default function Messenger() {
   }, [currentChat]);
 
   useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: new Date().toISOString()
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage
+    && currentChat?.members.includes(arrivalMessage.sender)
+    && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
     scrollRef.current?.scrollIntoView();
   }, [messages]);
+
+  useEffect(() => {
+    if (user) {
+      socket.current.emit("addUser", user._id);
+      socket.current.on("getUsers", (users) => {
+        setOnlineUsers(users.map((user) => user.userId));
+      });
+    }
+  }, [user]);
 
   return (
     <>
@@ -71,30 +108,35 @@ export default function Messenger() {
         </div>
         <div className="chatBox">
           <div className="chatBoxWrapper">
-            <div className="chatBoxTop">
-              { messages.map((message, index) => {
-                return (
-                  // ref is set to scrollRef it it's the last message, causing scroll to go to it
-                  <div ref={ index === messages.length - 1 ? scrollRef : null } >
-                    <Message isOwn={ message.sender === user._id } key={ message._id } message={ message }/>
-                  </div>
-                )
-              })}
-            </div>
-            <form className="chatBoxBottom">
-              <textarea className="chatMessageInput" placeholder="Type a message" onChange={ (e) => setNewMessage(e.target.value)} value={ newMessage }></textarea>
-              <button className="chatSubmitButton" onClick={ handleSubmit }>Send</button>
-            </form>
+            { currentChat ? (
+              <>
+                <div className="chatBoxTop">
+                  { messages.map((message, index) => {
+                    return (
+                      // ref is set to scrollRef it it's the last message, causing scroll to go to it
+                      <div key={ index } ref={ index === messages.length - 1 ? scrollRef : null }>
+                        <Message key={ message._id } isOwn={ message.sender === user._id } message={ message }/>
+                      </div>
+                    )
+                  })}
+                </div>
+                <form className="chatBoxBottom">
+                  <textarea className="chatMessageInput" placeholder="Type a message" onChange={ (e) => setNewMessage(e.target.value)} value={ newMessage }></textarea>
+                  <button className="chatSubmitButton" onClick={ handleSubmit }>Send</button>
+                </form>
+              </>
+              ) : (
+                <div key="noChatSelected"></div>
+              )
+            }
           </div>
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline />
-            <ChatOnline />
-            <ChatOnline />
+            <ChatOnline onlineUsers={ onlineUsers } currentUser={ user }  setCurrentChat={ setCurrentChat }/>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

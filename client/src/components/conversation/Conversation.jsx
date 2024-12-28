@@ -7,17 +7,19 @@ export default function Conversation({ conversation }) {
   const { user } = useContext(UserContext);
   const [friend, setFriend] = useState("");
 
+  // function to get the friend's conversation and is called in useEffect
+  const getFriend = async (friendId) => {
+    const res = await getFriendConversationCall(friendId);
+    setFriend(res.data);
+  }
+
   useEffect(() => {
     if (conversation && user) {
       const friendId = conversation.members.find((member) => {
         //sets friend to member of conversation that's not the current user
         return member !== user._id;
       });
-      const getFriend = async () => {
-        const res = await getFriendConversationCall(friendId);
-        setFriend(res.data);
-      }
-      getFriend();
+      getFriend(friendId);
     }
   }, [user, conversation]);
 

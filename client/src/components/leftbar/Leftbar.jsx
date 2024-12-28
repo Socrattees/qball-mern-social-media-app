@@ -44,7 +44,9 @@ export default function Leftbar() {
           </li>
           <li className="leftbarListItem">
             <ChatIcon className="leftbarIcon"/>
-            <span className="leftbarListItemText">Chats</span>
+            <Link to={ "/messenger" }>
+              <span className="leftbarListItemText">Chats</span>
+            </Link>
           </li>
           <li className="leftbarListItem">
             <PlayCircleIcon className="leftbarIcon"/>
