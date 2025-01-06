@@ -69,3 +69,10 @@ Should you desire to change any of the 3 ports, here are things to take into con
   - If you want to change the port of the socket:
     - Navigate to socket folder, go to index.js and change the arg of the new Server() declaration that is assigned to the variable io from the existing port (may be 8900) to the new port.
     - Should you still like the socket to log to the console when it is run, you may want to change the message to replace the old port with the new port.
+
+When using the application, the following .env files and content need to be added:
+  - api/.env:
+    - MONGO_URL = [INSERT URL OF YOUR MONGODB CLUSTER]
+  - client/.env:
+    - REACT_APP_PUBLIC_FOLDER = [INSERT PATH TO FOLDER THAT WILL CONTAIN YOUR MEDIA]
+    - GENERATE_SOURCEMAP = false (This is optional as it's more for reducing warning messages from the timeago-react library)
