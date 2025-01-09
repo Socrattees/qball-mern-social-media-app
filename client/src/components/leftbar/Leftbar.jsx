@@ -18,6 +18,7 @@ export default function Leftbar() {
   const { user:currentUser } = useContext(UserContext);
   const [followings, setFollowings] = useState([]);
 
+  // useEffect to fetch followings
   useEffect(() => {
     const fetchFollowings = async () => {
       if (currentUser) {
@@ -80,9 +81,9 @@ export default function Leftbar() {
         <button className="leftbarButton">Show More</button>
         <hr className="leftbarHr" />
         <ul className="leftbarFriendList">
-          { followings.map((user) => {
-            return <CloseFriend key={ user._id } user={ user } />
-          })}
+          {followings.map((user) => (
+            <CloseFriend key={user._id} user={user} />
+          ))}
         </ul>
       </div>
     </div>

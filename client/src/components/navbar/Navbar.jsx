@@ -25,9 +25,6 @@ export default function Navbar() {
     }
   };
 
-  //console.log(results);
-
-  // logs the user out of their account
   const handleLogOut = () => {
     logOutCall(user, dispatch); // changes the user to offline in server
     localStorage.removeItem("user"); // removes user details from local storage
@@ -35,7 +32,7 @@ export default function Navbar() {
     window.location.reload();
   }
 
-  // clears results should the input be empty
+  // useEffect to clear the search results when the query is empty
   useEffect(() => {
     if (!query) {
       setResults([]);
@@ -66,12 +63,16 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="navbarCenter">
-          <form className="searchbar" onSubmit={ handleSearch }>
+          <form className="searchbar" onSubmit={handleSearch}>
             <button className="searchButton">
               <SearchIcon className="searchIcon" type="submit" />
             </button>
-            <input type="text" placeholder="Search for friend, post or video" className="searchInput"
-              value={ query } onChange={ (e) => setQuery(e.target.value) }
+            <input
+              type="text"
+              placeholder="Search for friend, post or video"
+              className="searchInput"
+              value={ query }
+              onChange={(e) => setQuery(e.target.value)}
             />
           </form>
         </div>
@@ -80,7 +81,7 @@ export default function Navbar() {
             <Link to={ "/" }>
               <span className="navbarLink">Home</span>
             </Link>
-            <span className="navbarLink" onClick={ handleLogOut }>Log Out</span>
+            <span className="navbarLink" onClick={handleLogOut}>Log Out</span>
           </div>
           <div className="navbarIcons">
             <div className="navbarIconItem">
@@ -89,7 +90,7 @@ export default function Navbar() {
             </div>
             <div className="navbarIconItem">
               <ChatIcon />
-              <span className="navbarIconBadge">1</span>
+              <span className="navbarIconBadge">3</span>
             </div>
             <div className="navbarIconItem">
               <NotificationsIcon />
@@ -97,12 +98,19 @@ export default function Navbar() {
             </div>
           </div>
           <Link to={ `/profile/${user._id}` }>
-            <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (user.profilePicture || "person/noAvatar.png") } alt="" className="navbarImg" />
+            <img
+              src={
+                process.env.REACT_APP_PUBLIC_FOLDER +
+                (user.profilePicture || "person/noAvatar.png")
+              }
+              alt=""
+              className="navbarImg"
+            />
           </Link>
         </div>
       </div>
       <div className="navbarSearchResults">
-        { results.map((userResult) => (
+        {results.map((userResult) => (
           (user._id !== userResult._id) &&
           <SearchResult key={ userResult._id } user={ userResult } />
         ))}

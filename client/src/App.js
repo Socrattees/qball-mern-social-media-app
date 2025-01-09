@@ -14,12 +14,12 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={ user ? <Home /> : <Navigate to="/login" /> } />
+        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
         <Route path="/public-feed" element={ <PublicFeed /> } />
-        <Route path="/login" element={ user ? <Navigate to="/" /> : <Login /> } />
-        <Route path="/register" element={ user ? <Navigate to="/" /> : <Register /> } />
-        <Route path="/messenger" element={ user ? <Messenger /> : <Navigate to="/login" /> } />
-        <Route path="/profile/:id" element={ user ? <Profile /> : <Navigate to="/login" /> } />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/register" element={user ? <Navigate to="/" /> : <Register />} />
+        <Route path="/messenger" element={user ? <Messenger /> : <Navigate to="/login" />} />
+        <Route path="/profile/:id" element={user ? <Profile /> : <Navigate to="/login" />} />
       </>
     )
   );

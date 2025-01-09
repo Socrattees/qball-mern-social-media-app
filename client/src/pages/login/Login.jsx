@@ -6,14 +6,17 @@ import { CircularProgress } from '@mui/material';
 import { Link } from "react-router-dom";
 
 export default function Login() {
-  const email = useRef(); // unlike useState, prevents re-renders to save performance
-  const password = useRef(); // also it's designed to directly interacting with DOM elements and not so much on states
+  const email = useRef(); // Unlike useState, prevents re-renders to save performance
+  const password = useRef(); // Also designed to directly interacting with DOM elements and not so much on states
   const { user, isFetching, dispatch } = useContext(UserContext);
 
-  // handles the login form submission
+  // Handles the login form submission
   const handleClick = (e) => {
     e.preventDefault();
-    loginCall({ email:email.current.value, password:password.current.value }, dispatch); //current is the actual DOM element and value is the element's value
+    loginCall({
+      email:email.current.value,
+      password:password.current.value
+    }, dispatch); //current is the actual DOM element and value is the element's value
   }
 
   console.log(user);
@@ -27,13 +30,37 @@ export default function Login() {
           </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" onSubmit={ handleClick }>
-            <input placeholder="Email" type="email" className="loginInput" ref={ email } required />
-            <input placeholder="Password" type="password" className="loginInput" ref={ password } required />
-            <button className="loginButton" type="submit" disabled={ isFetching }>{ isFetching ? <CircularProgress color="error" size={25} /> : "Log In" }</button>
+          <form className="loginBox" onSubmit={handleClick}>
+            <input
+              placeholder="Email"
+              type="email"
+              className="loginInput"
+              ref={email}
+              required
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              className="loginInput"
+              ref={password}
+              required
+            />
+            <button
+              className="loginButton"
+              type="submit"
+              disabled={isFetching}
+            >
+              { isFetching ? (
+                <CircularProgress color="error" size={25} />
+              ) : (
+                "Log In"
+              ) }
+            </button>
             <span className="loginForgot">Forgot Password?</span>
             <Link to="/register">
-              <button className="loginRegisterButton" type="button">Create a new Account</button>
+              <button className="loginRegisterButton" type="button">
+                Create a new Account
+              </button>
             </Link>
           </form>
         </div>

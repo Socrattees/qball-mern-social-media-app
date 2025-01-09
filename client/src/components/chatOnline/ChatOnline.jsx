@@ -24,24 +24,27 @@ export default function ChatOnline({ onlineUsers, currentUser, setCurrentChat })
   }, [friends, onlineUsers]);
   
   return (
-    <div>
-      <div className="chatOnline">
-        { onlineFriends.map((friend) => {
-          return (
-            <div className="chatOnlineFriend" key={friend._id} onClick={ () => handleClick(friend._id) }>
-              <div className="chatOnlineFriendImgContainer">
-                <img
-                  src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") }
-                  alt=""
-                  className="chatOnlineImg"
-                />
-                <div className="chatOnlineBadge"></div>
-              </div>
-              <span className="chatOnlineName">{ friend.username }</span>
-            </div>
-          )
-        })}
-      </div>
+    <div className="chatOnline">
+      {onlineFriends.map((friend) => (
+        <div
+          className="chatOnlineFriend"
+          key={friend._id}
+          onClick={() => handleClick(friend._id)}
+        >
+          <div className="chatOnlineFriendImgContainer">
+            <img
+              src={
+                process.env.REACT_APP_PUBLIC_FOLDER +
+                (friend.profilePicture || "person/noAvatar.png")
+              }
+              alt=""
+              className="chatOnlineImg"
+            />
+            <div className="chatOnlineBadge"></div>
+          </div>
+          <span className="chatOnlineName">{ friend.username }</span>
+        </div>
+      ))}
     </div>
   );
 }

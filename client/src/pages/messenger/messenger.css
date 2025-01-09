@@ -1,5 +1,5 @@
 .messenger {
-  height: calc(100vh - 70px); /* accounts for the height of the navbar and padding */
+  height: calc(100vh - 70px); /* Accounts for the height of the navbar and padding */
   display: flex;
 }
 
@@ -15,7 +15,9 @@
   flex: 3;
 }
 
-.chatMenuWrapper, .chatBoxWrapper, .chatOnlineWrapper {
+.chatMenuWrapper,
+.chatBoxWrapper,
+.chatOnlineWrapper {
   padding: 10px;
   height: 100%;
 }

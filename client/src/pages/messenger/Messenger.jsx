@@ -11,8 +11,8 @@ import { io } from "socket.io-client";
 export default function Messenger() {
   const { user } = useContext(UserContext);
   const [conversations, setConversations] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null); //conversation that's selected
-  const [messages, setMessages] = useState([]); //messages from the selected conversation
+  const [currentChat, setCurrentChat] = useState(null); // Conversation that's selected
+  const [messages, setMessages] = useState([]); // Messages from the selected conversation
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -57,10 +57,12 @@ export default function Messenger() {
     getMessages();
   }, [currentChat]);
 
+  // useEffect for setting up the socket connection
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
   }, []);
 
+  // useEffect for listening to incoming messages
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -71,16 +73,19 @@ export default function Messenger() {
     });
   }, []);
 
+  // useEffect for adding the arrivalMessage to the messages array
   useEffect(() => {
     arrivalMessage
     && currentChat?.members.includes(arrivalMessage.sender)
     && setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
+  // useEffect for scrolling to the bottom of the chat box
   useEffect(() => {
     scrollRef.current?.scrollIntoView();
   }, [messages]);
 
+  // useEffect for adding the user to the socket connection
   useEffect(() => {
     if (user) {
       socket.current.emit("addUser", user._id);
@@ -92,48 +97,49 @@ export default function Messenger() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input type="text" placeholder="Search for friends" className="chatMenuInput" />
-            { conversations.map((conversation) => {
-              return (
-                <div key={ conversation._id } onClick={ () => setCurrentChat(conversation) }>
-                  <Conversation conversation={ conversation }/>
-                </div>
-              )
-            })}
+            {conversations.map((conversation) => (
+              <div key={conversation._id} onClick={() => setCurrentChat(conversation)}>
+                <Conversation conversation={conversation} />
+              </div>
+            ))}
           </div>
         </div>
         <div className="chatBox">
           <div className="chatBoxWrapper">
-            { currentChat ? (
+            {currentChat ? (
               <>
                 <div className="chatBoxTop">
-                  { messages.map((message, index) => {
-                    return (
-                      // ref is set to scrollRef it it's the last message, causing scroll to go to it
-                      <div key={ index } ref={ index === messages.length - 1 ? scrollRef : null }>
-                        <Message key={ message._id } isOwn={ message.sender === user._id } message={ message }/>
-                      </div>
-                    )
-                  })}
+                  {messages.map((message, index) => (
+                    <div key={index} ref={index === messages.length - 1 ? scrollRef : null}>
+                      <Message key={message._id} isOwn={message.sender === user._id} message={message} />
+                    </div>
+                  ))}
                 </div>
-                <form className="chatBoxBottom">
-                  <textarea className="chatMessageInput" placeholder="Type a message" onChange={ (e) => setNewMessage(e.target.value)} value={ newMessage }></textarea>
-                  <button className="chatSubmitButton" onClick={ handleSubmit }>Send</button>
+                <form className="chatBoxBottom" onSubmit={handleSubmit}>
+                  <textarea
+                    className="chatMessageInput"
+                    placeholder="Type a message"
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    value={newMessage}
+                  ></textarea>
+                  <button className="chatSubmitButton" type="submit">
+                    Send
+                  </button>
                 </form>
               </>
-              ) : (
-                <div key="noChatSelected"></div>
-              )
-            }
+            ) : (
+              <div key="noChatSelected"></div>
+            )}
           </div>
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline onlineUsers={ onlineUsers } currentUser={ user }  setCurrentChat={ setCurrentChat }/>
+            <ChatOnline onlineUsers={onlineUsers} currentUser={user} setCurrentChat={setCurrentChat} />
           </div>
         </div>
       </div>

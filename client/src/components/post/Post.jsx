@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import "./post.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from "axios";
-// import TimeAgo from 'timeago-react';
 import { formatDistanceToNow, parseISO } from "date-fns";
 import { Link } from "react-router-dom";
 import { likeCall } from "../../apiCalls";
@@ -10,11 +9,11 @@ import { UserContext } from "../../context/UserContext.js";
 
 export default function Post({ post }) {
   const { user:currentUser } = useContext(UserContext);
-  const [user, setUser] = useState({}); // user that post belongs to
-  const [like, setLike] = useState(post.likes.length); // post's likes
-  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id)); // boolean that checks if post has been liked by the current user
+  const [user, setUser] = useState({}); // User that post belongs to
+  const [like, setLike] = useState(post.likes.length); // Post's likes
+  const [isLiked, setIsLiked] = useState(post.likes.includes(currentUser._id)); // Boolean that checks if post has been liked by the current user
 
-  // manages the post's like state by the current user, adding like if user didn't like the post yet
+  // Manages the post's like state by the current user, adding like if user didn't like the post yet
   const likeHandler = () => {
     if (!isLiked) {
       setLike(like + 1);
@@ -26,7 +25,7 @@ export default function Post({ post }) {
     likeCall(post._id, currentUser._id);
   }
 
-  // manages how the text is displayed for the number of likes on the post
+  // Manages how the text is displayed for the number of likes on the post
   const postLikeText = () => {
     if (like) {
       if (like > 1) {
@@ -38,21 +37,21 @@ export default function Post({ post }) {
     }
   }
 
-  // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
+  // Function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
   const postDateOutput = () => {
     const dateString = post.createdAt;
     const date = parseISO(dateString);
     return formatDistanceToNow(date, 'yyyy-MM-dd HH:mm:ss') + " ago";
   }
 
-  // fetches the user of the post and sets it in the local variable
+  // Fetches the user of the post and sets it in the local variable
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(`/api/users?userId=${post.userId}`);
         setUser(res.data);
       } catch (err) {
-        console.error("Error fetching posts:", err.response ? err.response.data : err.message);
+        console.error("Error fetching posts:", err);
       }
     }
     fetchUser();
@@ -64,7 +63,14 @@ export default function Post({ post }) {
         <div className="postTop">
           <div className="postTopLeft">
             <Link to={ `/profile/${post.userId}`}>
-              <img className="postProfileImg" src={ user.profilePicture ? `${process.env.REACT_APP_PUBLIC_FOLDER}${user.profilePicture}` :  `${process.env.REACT_APP_PUBLIC_FOLDER}/person/noAvatar.png`} alt="" />
+              <img
+                src={
+                  process.env.REACT_APP_PUBLIC_FOLDER +
+                  (user.profilePicture || "person/NoAvatar.png")
+                }
+                alt=""
+                className="postProfileImg" 
+              />
             </Link>
             <span className="postUsername">{ user.username }</span>
             <span className="postDate">{ postDateOutput() }</span>
@@ -77,11 +83,23 @@ export default function Post({ post }) {
           <span className="postText">
             { post.desc || ""}
           </span>
-          <img className="postImg" src={ post.img ? `${process.env.REACT_APP_PUBLIC_FOLDER}${post.img}` : `${process.env.REACT_APP_PUBLIC_FOLDER}person/noCover.png`} alt="" />
+          <img
+            src={
+              process.env.REACT_APP_PUBLIC_FOLDER +
+              (post.img || "person/noCover.png")
+            }
+            alt=""
+            className="postImg"
+          />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
-            <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "like.png" } alt="" onClick={ likeHandler } />
+            <img
+              src={process.env.REACT_APP_PUBLIC_FOLDER + "like.png"}
+              alt=""
+              className="reactIcon"
+              onClick={likeHandler}
+            />
             {/* <img className="reactIcon" src={ process.env.REACT_APP_PUBLIC_FOLDER + "heart.png" } alt="" /> */}
             <span className="postLikeCounter">{ postLikeText() }</span>
           </div>

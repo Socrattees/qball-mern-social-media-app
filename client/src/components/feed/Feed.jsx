@@ -11,7 +11,7 @@ export default function Feed({ userId }) {
   const location = useLocation();
   const { user } = useContext(UserContext);
 
-  // fetches the posts to populate the feed based on the page
+  // Fetches the posts to populate the feed, based on the page
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -27,7 +27,7 @@ export default function Feed({ userId }) {
           return new Date(p2.createdAt) - new Date(p1.createdAt);
         }));
       } catch (err) {
-        console.error("Error fetching posts:", err.response ? err.response.data : err.message);
+        console.error("Error fetching posts:", err);
       }
     }
     fetchPosts();
@@ -36,10 +36,10 @@ export default function Feed({ userId }) {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        { (!userId || userId === user._id) && <Share /> /* ensures component doesn't show when visiting other people's pages */}
-        { posts.map(post => {
-          return <Post key={ post._id } post={ post }/>
-        })}
+        {(!userId || userId === user._id) && <Share />}
+        {posts.map(post => (
+          <Post key={post._id} post={post} />
+        ))}
       </div>
     </div>
   );

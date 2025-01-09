@@ -4,13 +4,13 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-//GET USER
+// Get user
 router.get("/", async(req, res) => {
-  const userId = req.query.userId; // grabs userId from query like ?userId={userId}
+  const userId = req.query.userId; // Grabs userId from query like ?userId={userId}
   // const username = req.query.username;
   try {
     const user = await User.findById(userId);
-    const { password, updatedAt, ...other } = user._doc; //seperates unnecessary properties
+    const { password, updatedAt, ...other } = user._doc; // Seperates unnecessary properties
     res.status(200).json(other);
   } catch (err) {
     res.status(500).json(err);
@@ -18,7 +18,7 @@ router.get("/", async(req, res) => {
 });
 
 
-//UPDATE USER
+// Update user
 router.put("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {
@@ -31,7 +31,7 @@ router.put("/:id", async (req, res) => {
     }
     try {
       const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body // sets everything to what's inside the req.body
+        $set: req.body // Sets everything to what's inside the req.body
       });
       res.status(200).json("Account has been updated");
     } catch (err) {
@@ -42,7 +42,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//DELETE USER
+// Delete user
 router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
@@ -57,14 +57,14 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-//FOLLOW A USER
+// Follow a user
 router.put("/:id/follow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
       const user = await User.findById(req.params.id);
       const currentUser = await User.findById(req.body.userId);
       if (!user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $push: { followers: req.body.userId }}); //pushes id into followers property
+        await user.updateOne({ $push: { followers: req.body.userId }}); // Pushes id into followers property
         await currentUser.updateOne({ $push: { following: req.params.id }})
         res.status(200).json("User has been followed");
       } else {
@@ -79,14 +79,14 @@ router.put("/:id/follow", async (req, res) => {
 });
 
 
-//UNFOLLOW A USER
+// Unfollow a user
 router.put("/:id/unfollow", async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
       const user = await User.findById(req.params.id);
       const currentUser = await User.findById(req.body.userId);
       if (user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $pull: { followers: req.body.userId }}); //pushes id into followers property
+        await user.updateOne({ $pull: { followers: req.body.userId }}); // Pushes id into followers property
         await currentUser.updateOne({ $pull: { following: req.params.id }})
         res.status(200).json("User has been unfollowed");
       } else {
@@ -100,7 +100,7 @@ router.put("/:id/unfollow", async (req, res) => {
   }
 });
 
-//GET LIST OF FOLLOWINGS
+// Get list of followings, which are users that the user is following
 router.get("/followings/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -120,7 +120,7 @@ router.get("/followings/:userId", async (req, res) => {
   }
 });
 
-//GET LIST OF FOLLOWINGS THAT ARE ONLINE
+// Get list of followings that are online
 router.get("/followings/:userId/online", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -142,7 +142,7 @@ router.get("/followings/:userId/online", async (req, res) => {
   }
 });
 
-//SEARCH FOR USER IN SEARCH BAR
+// Search for users
 router.get("/search", async (req, res) => {
   const query = req.query.q;
   if (!query) {

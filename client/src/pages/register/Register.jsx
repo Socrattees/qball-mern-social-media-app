@@ -8,11 +8,11 @@ export default function Register() {
   const username = useRef();
   const email = useRef();
   const password = useRef();
-  const rePassword = useRef();
+  const rePassword = useRef(); // Reference to the re-enter password input field
   const navigate = useNavigate();
   const { dispatch } = useContext(UserContext);
 
-  // handles the register form submission
+  // Handles the register form submission
   const handleClick = (e) => {
     e.preventDefault();
     if (password.current.value !== rePassword.current.value) {
@@ -39,14 +39,42 @@ export default function Register() {
           </span>
         </div>
         <div className="registerRight">
-          <form className="registerBox" onSubmit={ handleClick }>
-            <input placeholder="Username" type="text" className="registerInput" ref={ username } required />
-            <input placeholder="Email" type="email" className="registerInput" ref={ email } required />
-            <input placeholder="Password" type="password" className="registerInput" ref={ password } required />
-            <input placeholder="Re-enter Password" type="password" className="registerInput" ref={ rePassword} required />
-            <button className="registerButton" type="submit">Sign Up</button>
+          <form className="registerBox" onSubmit={handleClick}>
+            <input
+              placeholder="Username"
+              type="text"
+              className="registerInput"
+              ref={username}
+              required
+            />
+            <input
+              placeholder="Email"
+              type="email"
+              className="registerInput"
+              ref={email}
+              required
+            />
+            <input
+              placeholder="Password"
+              type="password"
+              className="registerInput"
+              ref={password}
+              required
+            />
+            <input
+              placeholder="Re-enter Password"
+              type="password"
+              className="registerInput"
+              ref={rePassword}
+              required
+            />
+            <button className="registerButton" type="submit">
+              Sign Up
+            </button>
             <Link to="/login">
-              <button className="loginButton" type="button">Log into account</button>
+              <button className="loginButton" type="button">
+                Log into account
+              </button>
             </Link>
           </form>
         </div>

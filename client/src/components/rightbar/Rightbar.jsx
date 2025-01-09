@@ -8,6 +8,7 @@ export default function Rightbar() {
   const { user } = useContext(UserContext);
   const [usersOnline, setUsersOnline] = useState([]);
 
+  // useEffect to get the list of online followings
   useEffect(() => {
     const getOnline = async () => {
       if (user) {
@@ -31,12 +32,16 @@ export default function Rightbar() {
             <b>Pola Foster</b> and <b>3 other friends</b> are celebrating their birthday today.
           </span>
         </div>
-        <img src={ process.env.REACT_APP_PUBLIC_FOLDER + "ad_img.jpg" } alt="" className="rightbarAd" />
+        <img
+          src={process.env.REACT_APP_PUBLIC_FOLDER + "ad_img.jpg" }
+          alt=""
+          className="rightbarAd"
+        />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          { usersOnline.map((user) => {
-            return <Online key={ user._id } user={ user }/>
-          }) }
+          {usersOnline.map((user) => {
+            return <Online key={user._id} user={user}/>
+          })}
         </ul>
       </div>
     </div>

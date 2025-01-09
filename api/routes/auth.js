@@ -4,21 +4,21 @@ import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-//REGISTER
+// Register user
 router.post("/register", async (req, res) => {
   try {
-    //generate encryption for password 
+    // Generate encryption for password 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    //create new user
+    // Create new user
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword
     });
 
-    //save user and return response
+    // Save user and return response
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//LOGIN
+// Log in user
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({email: req.body.email});
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//LOGOUT
+// Log out user
 router.put("/logout", async (req, res) => {
   try {
     const user = await User.findById(req.body.id);

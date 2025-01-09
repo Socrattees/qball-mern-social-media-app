@@ -4,7 +4,7 @@ import Conversation from "../models/Conversation.js";
 const router = express.Router();
 
 
-//CREATE CONVERSATION
+// Create new conversation
 router.post("/", async (req, res) => {
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId]
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-//GET CONVERSATION
+// Get conversation of a user
 router.get("/:userId", async (req, res) => {
   try {
     const conversation = await Conversation.find({
@@ -30,7 +30,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
-//GET CONVERSATION BASED ON TWO USERS
+// Get conversation between two users
 router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
   try {
     const conversation = await Conversation.findOne({

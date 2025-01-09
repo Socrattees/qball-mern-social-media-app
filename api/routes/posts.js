@@ -4,7 +4,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-//CREATE POST
+// Create a new post
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);
   try {
@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//UPDATE POST
+// Update post
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -30,7 +30,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//DELETE POST
+// Delete post
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -45,7 +45,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-//LIKE POST
+// Like/Dislike a post
 router.put("/:id/like", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -61,7 +61,7 @@ router.put("/:id/like", async (req, res) => {
   }
 });
 
-//GET POST
+// Get post
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -71,7 +71,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//GET TIMELINE POSTS
+// Get timeline posts
 router.get("/timeline/:userId", async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId);
@@ -87,7 +87,7 @@ router.get("/timeline/:userId", async (req, res) => {
   }
 });
 
-//GET ALL POSTS
+// Get all posts
 router.get("/public-feed/all", async (req, res) => {
   console.log("Getting posts...");
   try {
@@ -99,7 +99,7 @@ router.get("/public-feed/all", async (req, res) => {
   }
 });
 
-//GET ALL USER'S POSTS
+// Get all of a user's posts
 router.get("/profile/:userId", async (req, res) => {
   try {
     const currentUser = await User.findById(req.params.userId);

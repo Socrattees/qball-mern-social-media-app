@@ -7,11 +7,11 @@ import { followCall, getFollowingsCall, unFollowCall } from "../../apiCalls";
 import { Link } from "react-router-dom";
 
 export default function ProfileRightbar({ user }) {
-  const [followings, setFollowings] = useState([]); // profile's list of followings
+  const [followings, setFollowings] = useState([]); // Profile's list of followings
   const { user: currentUser } = useContext(UserContext);
   const [currentlyFollowing, setCurrentlyFollowing] = useState(
     currentUser.following.includes(user._id)
-  ); // boolean to determine if the current user is following this profile or not
+  ); // Boolean to determine if the current user is following this profile or not
 
   // Handles click caused by the follow button
   const handleClick = async () => {
@@ -26,7 +26,7 @@ export default function ProfileRightbar({ user }) {
     }
   };
 
-  // Manages changes to the currentlyFollowing boolean
+  // useEffect to determine if the current user is following the profile
   useEffect(() => {
     if (currentUser.following.includes(user._id)) {
       setCurrentlyFollowing(true);
@@ -35,7 +35,7 @@ export default function ProfileRightbar({ user }) {
     }
   }, [currentUser, user]);
 
-  // Manages changes to the user's followings list
+  // useEffect to get the list of followings for the profile
   useEffect(() => {
     const getFriends = async () => {
       if (user && user._id) {
@@ -80,16 +80,21 @@ export default function ProfileRightbar({ user }) {
       <div className="profileRightbarFriends">
         <h4 className="profileRightbarTitle">Following</h4>
         <div className="profileRightbarFollowings">
-        { followings.map((friend) => (
-          // takes list in followings and creates cards and links for them
+        {followings.map((friend) => (
           <Link to={"/profile/" + friend.username} key={ friend._id }>
             <div className="profileRightbarFollowing">
-              <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") }
-                alt="" className="profileRightbarFollowingImg" />
+              <img
+                src={
+                  process.env.REACT_APP_PUBLIC_FOLDER +
+                  (friend.profilePicture || "person/noAvatar.png")
+                }
+                alt=""
+                className="profileRightbarFollowingImg"
+              />
               <span className="profileRightbarFollowingName">{ friend.username }</span>
             </div>
           </Link>
-          )) }
+          ))}
         </div>
       </div>
     </div>

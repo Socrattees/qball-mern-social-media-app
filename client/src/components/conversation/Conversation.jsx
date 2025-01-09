@@ -7,7 +7,7 @@ export default function Conversation({ conversation }) {
   const { user } = useContext(UserContext);
   const [friend, setFriend] = useState("");
 
-  // function to get the friend's conversation and is called in useEffect
+  // Function to get the friend's conversation
   const getFriend = async (friendId) => {
     const res = await getFriendConversationCall(friendId);
     setFriend(res.data);
@@ -16,7 +16,7 @@ export default function Conversation({ conversation }) {
   useEffect(() => {
     if (conversation && user) {
       const friendId = conversation.members.find((member) => {
-        //sets friend to member of conversation that's not the current user
+        // Sets friend to member of conversation that's not the current user
         return member !== user._id;
       });
       getFriend(friendId);
@@ -25,7 +25,13 @@ export default function Conversation({ conversation }) {
 
   return (
     <div className="conversation">
-      <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") } alt="" className="conversationImg" />
+      <img src={
+        process.env.REACT_APP_PUBLIC_FOLDER +
+        (friend.profilePicture || "person/noAvatar.png")
+      }
+      alt=""
+      className="conversationImg"
+    />
       <span className="conversationName">{ friend.username }</span>
     </div>
   )

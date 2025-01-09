@@ -6,13 +6,14 @@ import { getFriendMessageCall } from "../../apiCalls";
 export default function Message({message, isOwn}) {
     const [friend, setFriend] = useState("");
 
-    // function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
+    // Function to convert the post.createdAt value from MangoDB to value that can be used by library date-fns
     const messageDateOutput = () => {
       const dateString = message.createdAt.toString();
       const date = parseISO(dateString);
       return formatDistanceToNow(date) + " ago";
     }
 
+    // useEffect to get the friend data if the message does not belong to the current user
     useEffect(() => {
       if (message && !isOwn) {
         const getFriend = async () => {
@@ -24,10 +25,16 @@ export default function Message({message, isOwn}) {
     }, [message, isOwn]);
 
   return (
-    <div className={ isOwn ? "message own" : "message" }>
+    <div className={isOwn ? "message own" : "message"}>
       <div className="messageTop">
-        { !isOwn &&
-          <img src={ process.env.REACT_APP_PUBLIC_FOLDER + (friend.profilePicture || "person/noAvatar.png") } alt="" className="messageImg" />
+        {!isOwn &&
+          <img src={
+            process.env.REACT_APP_PUBLIC_FOLDER +
+            (friend.profilePicture || "person/noAvatar.png")
+          }
+          alt=""
+          className="messageImg"
+          />
         }
         <p className="messageText">
           { message.text }
